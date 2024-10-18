@@ -1,15 +1,29 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"runtime"
+
 	"test-golang/src/config" // 수정된 경로
 	"test-golang/src/controller"
 	"test-golang/src/repository"
 	"test-golang/src/router"
 	"test-golang/src/service"
 )
-
+func printGoASCIIArt() {
+	goVersion := runtime.Version() 
+	asciiArt := `
+	╔═╗╔═╗  ╦  ╔═╗╔╗╔╔═╗
+	║ ╦║ ║  ║  ╠═╣║║║║ ╦  %s
+	╚═╝╚═╝  ╩═╝╩ ╩╝╚╝╚═╝	
+  `
+	  fmt.Println(asciiArt, goVersion)
+}
 func main() {
+
+	// Print ASCII art
+	printGoASCIIArt()
 	// Load configuration
 	cfg := config.LoadConfig()
 
@@ -32,3 +46,5 @@ func main() {
 		log.Fatal(err)
 	}
 }
+
+

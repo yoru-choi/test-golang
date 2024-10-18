@@ -5,6 +5,7 @@ import (
 
 	"test-golang/src/models" // 수정된 경로
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -36,7 +37,7 @@ func (r *userRepository) CreateUser(ctx context.Context, user *models.User) erro
 
 func (r *userRepository) GetUserByID(ctx context.Context, id string) (*models.User, error) {
 	var user models.User
-	err := r.collection.FindOne(ctx, models.User{ID: id}).Decode(&user)
+	err := r.collection.FindOne(ctx, bson.M{"_id": id}).Decode(&user)
 	if err != nil {
 		return nil, err
 	}
@@ -44,12 +45,18 @@ func (r *userRepository) GetUserByID(ctx context.Context, id string) (*models.Us
 }
 
 func (r *userRepository) UpdateUser(ctx context.Context, id string, user *models.User) error {
-	update := options.Update().Set("name", user.Name).Set("email", user.Email)
-	_, err := r.collection.UpdateOne(ctx, models.User{ID: id}, update)
+	// 업데이트할 필드들을 bson.M에 담아 전달
+	update := bson.M{
+		"$set": bson.M{
+			"name":  user.Name,
+			"email": user.Email,
+		},
+	}
+	_, err := r.collection.UpdateOne(ctx, bson.M{"_id": id}, update, options.Update())
 	return err
 }
 
 func (r *userRepository) DeleteUser(ctx context.Context, id string) error {
-	_, err := r.collection.DeleteOne(ctx, models.User{ID: id})
+	_, err := r.collection.DeleteOne(ctx, bson.M{"_id": id})
 	return err
 }
