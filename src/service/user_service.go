@@ -9,8 +9,9 @@ import (
 
 // UserService defines methods for user operations
 type UserService interface {
-	CreateUser(ctx context.Context, user *models.User) error
+	GetUsers(ctx context.Context) ([]*models.User, error)
 	GetUserByID(ctx context.Context, id string) (*models.User, error)
+	CreateUser(ctx context.Context, user *models.User) error
 	UpdateUser(ctx context.Context, id string, user *models.User) error
 	DeleteUser(ctx context.Context, id string) error
 }
@@ -27,12 +28,16 @@ func NewUserService(userRepo repository.UserRepository) UserService {
 	}
 }
 
-func (s *userService) CreateUser(ctx context.Context, user *models.User) error {
-	return s.userRepo.CreateUser(ctx, user)
+
+func (s *userService) GetUsers(ctx context.Context) ([]*models.User, error) {
+	return s.userRepo.GetUsers(ctx)
 }
 
 func (s *userService) GetUserByID(ctx context.Context, id string) (*models.User, error) {
 	return s.userRepo.GetUserByID(ctx, id)
+}
+func (s *userService) CreateUser(ctx context.Context, user *models.User) error {
+	return s.userRepo.CreateUser(ctx, user)
 }
 
 func (s *userService) UpdateUser(ctx context.Context, id string, user *models.User) error {

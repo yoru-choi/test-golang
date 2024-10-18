@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"runtime"
@@ -15,10 +16,10 @@ func printGoASCIIArt() {
 	goVersion := runtime.Version() 
 	asciiArt := `
 	╔═╗╔═╗  ╦  ╔═╗╔╗╔╔═╗
-	║ ╦║ ║  ║  ╠═╣║║║║ ╦  %s
-	╚═╝╚═╝  ╩═╝╩ ╩╝╚╝╚═╝	
+	║ ╦║ ║  ║  ╠═╣║║║║ ╦  
+	╚═╝╚═╝  ╩═╝╩ ╩╝╚╝╚═╝  %s
   `
-	  fmt.Println(asciiArt, goVersion)
+	  fmt.Printf(asciiArt, goVersion)
 }
 func main() {
 
@@ -32,7 +33,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer client.Disconnect(nil)
+	defer client.Disconnect(context.TODO()) 
 
 	// Initialize repository, service, controller
 	db := client.Database(cfg.Database)

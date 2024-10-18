@@ -22,6 +22,16 @@ func NewUserController(userService service.UserService) *UserController {
 	}
 }
 
+func (c *UserController) GetUsersHandler(ctx *gin.Context) {
+	users, err := c.userService.GetUsers(context.Background())
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
+	ctx.JSON(http.StatusOK, users)
+}
+
+
 func (c *UserController) GetUserHandler(ctx *gin.Context) {
 	userID := ctx.Param("id")
 	user, err := c.userService.GetUserByID(context.Background(), userID)
