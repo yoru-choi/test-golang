@@ -1,21 +1,22 @@
 package router
 
 import (
-	"project/controller"
+	"test-golang/src/controller"
 
 	"github.com/gin-gonic/gin"
 )
 
-// SetupRouter initializes the Gin router with routes
+// SetupRouter initializes the Gin router and sets up routes
 func SetupRouter(userController *controller.UserController) *gin.Engine {
-	router := gin.Default()
+	r := gin.Default()
+	usersGroup := r.Group("/users") // /users 경로로 그룹화
 
-	usersGroup := router.Group("/users")
 	{
 		usersGroup.GET("/:id", userController.GetUserHandler)
-		usersGroup.POST("", userController.CreateUserHandler)
+		usersGroup.POST("", userController.CreateUserHandler)         // 빈 문자열로 POST를 처리
 		usersGroup.PUT("/:id", userController.UpdateUserHandler)
 		usersGroup.DELETE("/:id", userController.DeleteUserHandler)
 	}
-	return router
+
+	return r // *gin.Engine 반환
 }

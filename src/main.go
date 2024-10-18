@@ -1,12 +1,12 @@
 package main
 
 import (
-	"config"
-	"controller"
 	"log"
-	"repository"
-	"router"
-	"service"
+	"test-golang/src/config" // 수정된 경로
+	"test-golang/src/controller"
+	"test-golang/src/repository"
+	"test-golang/src/router"
+	"test-golang/src/service"
 )
 
 func main() {

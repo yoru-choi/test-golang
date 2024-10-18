@@ -2,7 +2,8 @@ package repository
 
 import (
 	"context"
-	"project/models"
+
+	"test-golang/src/models" // 수정된 경로
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

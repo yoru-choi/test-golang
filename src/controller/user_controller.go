@@ -3,8 +3,9 @@ package controller
 import (
 	"context"
 	"net/http"
-	"project/models"
-	"project/service"
+
+	"test-golang/src/models"
+	"test-golang/src/service"
 
 	"github.com/gin-gonic/gin"
 )
